@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>TaskDesk Pro</title>
+
+<style>
+
+*{
+margin:0;
+padding:0;
+box-sizing:border-box;
+font-family:Arial,sans-serif;
+}
+
+body{
+background:#0f172a;
+color:white;
+padding:20px;
+}
+
+.header{
+display:flex;
+justify-content:space-between;
+align-items:center;
+margin-bottom:25px;
+}
+
+.logo{
+font-size:28px;
+font-weight:bold;
+color:#38bdf8;
+}
+
+button{
+background:#2563eb;
+color:white;
+border:none;
+padding:10px 18px;
+border-radius:10px;
+cursor:pointer;
+}
+
+button:hover{
+background:#1d4ed8;
+}
+
+.stats{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(180px,1fr));
+gap:15px;
+margin-bottom:20px;
+}
+
+.card{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.card h2{
+color:#38bdf8;
+}
+
+.progress-box{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+margin-bottom:20px;
+}
+
+.progress-bar{
+height:20px;
+background:#334155;
+border-radius:10px;
+overflow:hidden;
+margin-top:10px;
+}
+
+.progress{
+height:100%;
+width:75%;
+background:linear-gradient(to right,#06b6d4,#3b82f6);
+}
+
+.section-title{
+margin:25px 0 15px;
+}
+
+.team{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+gap:15px;
+}
+
+.member{
+background:#1e293b;
+padding:20px;
+border-radius:15px;
+text-align:center;
+}
+
+.member img{
+width:90px;
+height:90px;
+border-radius:50%;
+margin-bottom:10px;
+}
+
+.tasks{
+display:grid;
+grid-template-columns:repeat(auto-fit,minmax(250px,1fr));
+gap:15px;
+}
+
+.task{
+background:#1e293b;
+padding:15px;
+border-radius:15px;
+}
+
+.modal{
+display:none;
+position:fixed;
+top:0;
+left:0;
+width:100%;
+height:100%;
+background:rgba(0,0,0,.8);
+justify-content:center;
+align-items:center;
+}
+
+.modal-content{
+background:#1e293b;
+padding:25px;
+border-radius:15px;
+width:350px;
+}
+
+.modal-content input,
+.modal-content select{
+width:100%;
+padding:10px;
+margin:10px 0;
+border:none;
+border-radius:8px;
+}
+
+</style>
+</head>
+
+<body>
+
+<div class="header">
+<div class="logo">🚀 TASKDESK PRO</div>
+<button id="newTaskBtn">+ New Task</button>
+</div>
+
+<h1>Smart Team Task Management Dashboard</h1>
+
+<br>
+
+<div class="stats">
+
+<div class="card">
+<h2 id="totalTasks">8</h2>
+<p>Total Tasks</p>
+</div>
+
+<div class="card">
+<h2 id="todoCount">3</h2>
+<p>To Do</p>
+</div>
+
+<div class="card">
+<h2 id="progressCount">3</h2>
+<p>In Progress</p>
+</div>
+
+<div class="card">
+<h2 id="completedCount">2</h2>
+<p>Completed</p>
+</div>
+
+</div>
+
+<div class="progress-box">
+<h3>Project Progress</h3>
+<div class="progress-bar">
+<div class="progress"></div>
+</div>
+<p style="margin-top:10px;">75% Completed</p>
+</div><h2 class="section-title">Team Members</h2>
+
+<div class="team">
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Aarav+Sharma&background=2563eb&color=fff&size=128">
+<h3>Aarav Sharma</h3>
+<p>Frontend Developer</p>
+</div>
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Priya+Verma&background=2563eb&color=fff&size=128">
+<h3>Priya Verma</h3>
+<p>UI/UX Designer</p>
+</div>
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Rahul+Kumar&background=2563eb&color=fff&size=128">
+<h3>Rahul Kumar</h3>
+<p>Backend Developer</p>
+</div>
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Ananya+Reddy&background=2563eb&color=fff&size=128">
+<h3>Ananya Reddy</h3>
+<p>Data Analyst</p>
+</div>
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Vikram+Patel&background=2563eb&color=fff&size=128">
+<h3>Vikram Patel</h3>
+<p>Cloud Engineer</p>
+</div>
+
+<div class="member">
+<img src="https://ui-avatars.com/api/?name=Sneha+Gupta&background=2563eb&color=fff&size=128">
+<h3>Sneha Gupta</h3>
+<p>QA Engineer</p>
+</div>
+
+</div>
+
+<h2 class="section-title">Current Tasks</h2>
+
+<div id="taskContainer" class="tasks">
+
+<div class="task">
+<h3>Machine Learning Model Training</h3>
+<p>Priority: High</p>
+<p>Status: In Progress</p>
+</div>
+
+<div class="task">
+<h3>Authentication Module Testing</h3>
+<p>Priority: Medium</p>
+<p>Status: Completed</p>
+</div>
+
+<div class="task">
+<h3>Frontend Dashboard Redesign</h3>
+<p>Priority: High</p>
+<p>Status: To Do</p>
+</div>
+
+<div class="task">
+<h3>Database Optimization</h3>
+<p>Priority: Low</p>
+<p>Status: In Progress</p>
+</div>
+
+<div class="task">
+<h3>API Integration</h3>
+<p>Priority: Medium</p>
+<p>Status: To Do</p>
+</div>
+
+<div class="task">
+<h3>Data Visualization Report</h3>
+<p>Priority: Low</p>
+<p>Status: Completed</p>
+</div>
+
+</div>
+
+<div style="background:#1e293b;padding:15px;border-radius:15px;margin-top:20px;">
+<h3>Task List</h3>
+
+<ul id="taskList" style="padding-left:20px;margin-top:10px;">
+<li>Machine Learning Model Training - In Progress</li>
+<li>Authentication Module Testing - Completed</li>
+<li>Frontend Dashboard Redesign - To Do</li>
+<li>Database Optimization - In Progress</li>
+<li>API Integration - To Do</li>
+<li>Data Visualization Report - Completed</li>
+</ul>
+
+</div>
+
+<div id="taskModal" class="modal">
+<div class="modal-content">
+
+<h2>Add New Task</h2>
+
+<input type="text" id="taskName" placeholder="Task Name">
+
+<select id="priority">
+<option>High</option>
+<option>Medium</option>
+<option>Low</option>
+</select>
+
+<select id="status">
+<option>To Do</option>
+<option>In Progress</option>
+<option>Completed</option>
+</select>
+
+<button onclick="addTask()">Add Task</button>
+<button onclick="closeModal()">Close</button>
+
+</div>
+</div><script>
+
+const modal=document.getElementById("taskModal");
+
+document.getElementById("newTaskBtn").onclick=function(){
+modal.style.display="flex";
+};
+
+function closeModal(){
+modal.style.display="none";
+}
+
+let total=8;
+let todo=3;
+let progress=3;
+let completed=2;
+
+function addTask(){
+
+let taskName=document.getElementById("taskName").value;
+let priority=document.getElementById("priority").value;
+let status=document.getElementById("status").value;
+
+if(taskName===""){
+alert("Please enter a task name");
+return;
+}
+
+const task=document.createElement("div");
+
+task.className="task";
+
+task.innerHTML=`
+<h3>${taskName}</h3>
+<p>Priority: ${priority}</p>
+<p>Status: ${status}</p>
+`;
+
+document.getElementById("taskContainer").appendChild(task);
+
+const li=document.createElement("li");
+
+li.innerText=taskName + " - " + status;
+
+document.getElementById("taskList").appendChild(li);
+
+total++;
+
+if(status==="To Do"){
+todo++;
+}
+
+if(status==="In Progress"){
+progress++;
+}
+
+if(status==="Completed"){
+completed++;
+}
+
+document.getElementById("totalTasks").innerText=total;
+document.getElementById("todoCount").innerText=todo;
+document.getElementById("progressCount").innerText=progress;
+document.getElementById("completedCount").innerText=completed;
+
+document.getElementById("taskName").value="";
+
+closeModal();
+
+}
+
+</script>
+
+</body>
+</html>
